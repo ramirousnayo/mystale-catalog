@@ -94,6 +94,54 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
+# Mystale Catalog
+
+Sistema web para registrar y consultar criaturas energéticas. Proyecto preparado como take-home challenge.
+
+## Contenido
+
+- Catálogo con filtro por elemento
+- Formulario para registrar criaturas y sus estadísticas de combate
+- Integración con el panel de administración de Django
+
+---
+
+## Requisitos
+
+- Python 3.10+
+- pip
+
+---
+
+## Instalación rápida
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/ramirousnayo/mystale-catalog.git
+cd mystale-catalog
+```
+
+2. Crea y activa un entorno virtual:
+
+```bash
+python -m venv venv
+source venv/bin/activate   # macOS / Linux
+# venv\Scripts\activate  # Windows
+```
+
+3. Instala dependencias:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Copia el ejemplo de variables de entorno y edítalo:
+
+```bash
+cp .env.example .env
+```
+
 Rellena `SECRET_KEY` en `.env` con una cadena larga y segura.
 
 5. Aplica migraciones:
