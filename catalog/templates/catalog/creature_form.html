@@ -1,0 +1,80 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Registrar criatura — Mystale{% endblock %}
+
+{% block content %}
+<a href="/" style="color:var(--muted); text-decoration:none; font-size:0.9rem;">← Volver al catálogo</a>
+
+<div style="max-width:560px; margin-top:1.5rem;">
+  <h2 style="margin-bottom:1.5rem; color:var(--accent);">Registrar nueva criatura</h2>
+
+  <form method="post"
+        style="background:var(--surface); border:1px solid var(--border);
+               border-radius:16px; padding:2rem; display:flex; flex-direction:column; gap:1.2rem;">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div>
+      <label style="display:block; font-size:0.82rem; color:var(--muted);
+                    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem;">
+        {{ field.label }}{% if field.field.required %} *{% endif %}
+      </label>
+      {{ field }}
+      {% if field.errors %}
+        {% for error in field.errors %}
+        <span style="font-size:0.78rem; color:#ff6b6b; display:block; margin-top:0.3rem;">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <hr style="border-color:var(--border);" />
+    <h3 style="font-size:0.9rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em;">
+      Estadísticas de combate
+    </h3>
+
+    {% for field in stats_form %}
+    <div>
+      <label style="display:block; font-size:0.82rem; color:var(--muted);
+                    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem;">
+        {{ field.label }} *
+      </label>
+      {{ field }}
+      {% if field.errors %}
+        {% for error in field.errors %}
+        <span style="font-size:0.78rem; color:#ff6b6b; display:block; margin-top:0.3rem;">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit"
+            style="background:var(--accent); color:#fff; border:none; padding:0.8rem;
+                   border-radius:8px; font-size:1rem; cursor:pointer; margin-top:0.5rem;
+                   transition: opacity 0.2s;"
+            onmouseover="this.style.opacity='0.85'"
+            onmouseout="this.style.opacity='1'">
+      Registrar criatura
+    </button>
+  </form>
+</div>
+
+<style>
+  input, select, textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  select option { background: var(--surface); }
+</style>
+{% endblock %}
