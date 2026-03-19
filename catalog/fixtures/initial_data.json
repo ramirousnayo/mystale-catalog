@@ -1,0 +1,46 @@
+[
+{
+  "model": "catalog.creature",
+  "pk": 1,
+  "fields": {
+    "name": "Pyroclast",
+    "element": "fuego",
+    "threat_level": 8,
+    "description": "Entidad ígnea relevada en zonas volcánicas activas. Emite pulsos de calor que inutilizan equipos electrónicos en un radio de 50 metros. Altamente territorial.",
+    "created_at": "2026-03-19T15:19:30.614Z"
+  }
+},
+{
+  "model": "catalog.creature",
+  "pk": 2,
+  "fields": {
+    "name": "Vordex",
+    "element": "sombra",
+    "threat_level": 6,
+    "description": "Detectada en cavernas subterráneas profundas. Absorbe la luz del entorno para camuflarse. Los registros de campo indican capacidad de duplicación ilusoria.",
+    "created_at": "2026-03-19T15:20:17.146Z"
+  }
+},
+{
+  "model": "catalog.combatstats",
+  "pk": 1,
+  "fields": {
+    "creature": 1,
+    "hp": 180,
+    "attack": 95,
+    "defense": 60,
+    "speed": 72
+  }
+},
+{
+  "model": "catalog.combatstats",
+  "pk": 2,
+  "fields": {
+    "creature": 2,
+    "hp": 140,
+    "attack": 78,
+    "defense": 85,
+    "speed": 85
+  }
+}
+]

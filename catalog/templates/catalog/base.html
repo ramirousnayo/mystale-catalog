@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Mystale Catalog{% endblock %}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --border: #2a2a4a;
+      --text: #e0e0f0;
+      --muted: #8888aa;
+      --accent: #7c6af7;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    header a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      background: var(--accent);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+
+    header a:hover { opacity: 0.8; }
+
+    main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+
+    /* ── Colores por elemento ── */
+    .el-fuego   { --el: #ff6b35; --el-bg: #2a1510; }
+    .el-agua    { --el: #35b8ff; --el-bg: #0f1e2a; }
+    .el-tierra  { --el: #a08c5a; --el-bg: #1e1a0f; }
+    .el-rayo    { --el: #ffe135; --el-bg: #1e1c0a; }
+    .el-sombra  { --el: #9b59b6; --el-bg: #1a0f2a; }
+    .el-cristal { --el: #a8e6f0; --el-bg: #0f1e22; }
+    .el-viento  { --el: #5affb0; --el-bg: #0f2218; }
+    .el-hielo   { --el: #b0e0ff; --el-bg: #0f1822; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="/" style="background:none;padding:0;color:var(--accent);">⬡ Mystale Catalog</a></h1>
+    <a href="{% url 'catalog:create' %}">+ Registrar criatura</a>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

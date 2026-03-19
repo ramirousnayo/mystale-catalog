@@ -1,0 +1,55 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}{{ creature.name }} — Mystale{% endblock %}
+
+{% block content %}
+<a href="/" style="color:var(--muted); text-decoration:none; font-size:0.9rem;">← Volver al catálogo</a>
+
+<div class="el-{{ creature.element }}"
+     style="background:var(--el-bg); border:1px solid var(--el);
+            border-radius:16px; padding:2rem; margin-top:1.5rem; max-width:600px;">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <span style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em;
+                 color:var(--el); font-weight:600;">{{ creature.get_element_display }}</span>
+    <span style="background:var(--el); color:#000; padding:0.3rem 0.8rem;
+                 border-radius:6px; font-weight:700; font-size:0.85rem;">
+      ⚠ Amenaza {{ creature.threat_level }}/10
+    </span>
+  </div>
+
+  <h1 style="font-size:2rem; margin-bottom:1rem;">{{ creature.name }}</h1>
+
+  <p style="color:var(--muted); line-height:1.7; margin-bottom:2rem;">{{ creature.description }}</p>
+
+  {% if creature.combat_stats %}
+  <h3 style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em;
+             color:var(--el); margin-bottom:1rem;">Estadísticas de combate</h3>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    {% with s=creature.combat_stats %}
+    <div style="background:var(--surface); border-radius:8px; padding:1rem; text-align:center;">
+      <div style="font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem;">HP</div>
+      <div style="font-size:1.8rem; font-weight:700; color:var(--el);">{{ s.hp }}</div>
+    </div>
+    <div style="background:var(--surface); border-radius:8px; padding:1rem; text-align:center;">
+      <div style="font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem;">ATAQUE</div>
+      <div style="font-size:1.8rem; font-weight:700; color:var(--el);">{{ s.attack }}</div>
+    </div>
+    <div style="background:var(--surface); border-radius:8px; padding:1rem; text-align:center;">
+      <div style="font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem;">DEFENSA</div>
+      <div style="font-size:1.8rem; font-weight:700; color:var(--el);">{{ s.defense }}</div>
+    </div>
+    <div style="background:var(--surface); border-radius:8px; padding:1rem; text-align:center;">
+      <div style="font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem;">VELOCIDAD</div>
+      <div style="font-size:1.8rem; font-weight:700; color:var(--el);">{{ s.speed }}</div>
+    </div>
+    {% endwith %}
+  </div>
+  {% endif %}
+
+  <p style="font-size:0.75rem; color:var(--muted); margin-top:1.5rem;">
+    Registrada el {{ creature.created_at|date:"d/m/Y" }}
+  </p>
+</div>
+{% endblock %}
