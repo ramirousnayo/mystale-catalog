@@ -1,195 +1,147 @@
-# Mystale Catalog
+# 🧬 Mystale Catalog
 
-Sistema web interno para catalogar criaturas energéticas relevadas en campo.
-Desarrollado como take-home challenge para Mystale Labs.
+Sistema web interno para catalogar criaturas energéticas relevadas en campo.  
+Desarrollado como *take-home challenge* para Mystale Labs.
 
 ---
 
-## Requisitos
+## 📋 Requisitos
 
 - Python 3.10+
 - pip
 
 ---
 
-## Instalación
+## ⚙️ Instalación
 
 ### 1. Clonar el repositorio
 
-\```bash
+```bash
 git clone https://github.com/ramirousnayo/mystale-catalog.git
 cd mystale-catalog
-\```
+```
+
+---
 
 ### 2. Crear y activar el entorno virtual
 
-\```bash
+**Mac / Linux**
+```bash
 python -m venv venv
-source venv/bin/activate        # Mac/Linux
-# venv\Scripts\activate         # Windows
-\```
+source venv/bin/activate
+```
+
+**Windows**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+---
 
 ### 3. Instalar dependencias
 
-\```bash
+```bash
 pip install -r requirements.txt
-\```
+```
+
+---
 
 ### 4. Configurar variables de entorno
 
-\```bash
+```bash
 cp .env.example .env
-\```
+```
 
-Editar `.env` y completar `SECRET_KEY` con cualquier string largo y aleatorio.
+Editar `.env`:
+
+```env
+SECRET_KEY=tu_clave_secreta_larga_y_aleatoria
+```
+
+---
 
 ### 5. Aplicar migraciones
-
-\```bash
-# Mystale Catalog
-
-Sistema web para registrar y consultar criaturas energéticas. Proyecto preparado como take-home challenge.
-
-## Contenido
-
-- Catálogo con filtro por elemento
-- Formulario para registrar criaturas y sus estadísticas de combate
-- Integración con el panel de administración de Django
-
----
-
-## Requisitos
-
-- Python 3.10+
-- pip
-
----
-
-## Instalación rápida
-
-1. Clona el repositorio:
-
-```bash
-git clone https://github.com/ramirousnayo/mystale-catalog.git
-cd mystale-catalog
-```
-
-2. Crea y activa un entorno virtual:
-
-```bash
-python -m venv venv
-source venv/bin/activate   # macOS / Linux
-# venv\Scripts\activate  # Windows
-```
-
-3. Instala dependencias:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Copia el ejemplo de variables de entorno y edítalo:
-
-```bash
-cp .env.example .env
-```
-
-# Mystale Catalog
-
-Sistema web para registrar y consultar criaturas energéticas. Proyecto preparado como take-home challenge.
-
-## Contenido
-
-- Catálogo con filtro por elemento
-- Formulario para registrar criaturas y sus estadísticas de combate
-- Integración con el panel de administración de Django
-
----
-
-## Requisitos
-
-- Python 3.10+
-- pip
-
----
-
-## Instalación rápida
-
-1. Clona el repositorio:
-
-```bash
-git clone https://github.com/ramirousnayo/mystale-catalog.git
-cd mystale-catalog
-```
-
-2. Crea y activa un entorno virtual:
-
-```bash
-python -m venv venv
-source venv/bin/activate   # macOS / Linux
-# venv\Scripts\activate  # Windows
-```
-
-3. Instala dependencias:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Copia el ejemplo de variables de entorno y edítalo:
-
-```bash
-cp .env.example .env
-```
-
-Rellena `SECRET_KEY` en `.env` con una cadena larga y segura.
-
-5. Aplica migraciones:
 
 ```bash
 python manage.py migrate
 ```
 
-6. (Opcional) Carga datos iniciales:
+---
+
+### 6. Cargar datos iniciales (opcional)
 
 ```bash
 python manage.py loaddata initial_data
 ```
 
-7. Ejecuta el servidor de desarrollo:
+---
+
+### 7. Ejecutar el servidor
 
 ```bash
 python manage.py runserver
 ```
 
-Abre http://127.0.0.1:8000 en tu navegador.
+Abrir: http://127.0.0.1:8000
 
 ---
 
-## Funcionalidades principales
+## 🚀 Funcionalidades
 
-- Navegación por catálogo con tarjetas temáticas por elemento
-- Filtro por elemento
-- Registro de criaturas con estadísticas de combate (HP, Ataque, Defensa, Velocidad)
-- Panel de administración en `/admin/`
-
----
-
-## Decisiones técnicas (resumen)
-
-- `CombatStats` es un modelo separado relacionado one-to-one con `Creature` para mantener el modelo principal sencillo y explícito en migraciones.
-- Se usa `select_related('combat_stats')` en vistas para evitar consultas N+1.
-- El registro de criatura y sus estadísticas se guarda dentro de `transaction.atomic()` para garantizar consistencia.
-- `SECRET_KEY` y `DEBUG` se leen de `.env` usando `python-dotenv`. El `.env` no debe subirse al repositorio.
+- Catálogo navegable de criaturas (tipo Pokédex)  
+- Filtro por categoría elemental  
+- Formulario de registro con validaciones  
+- Panel de administración en `/admin/`  
 
 ---
 
-## Estructura del proyecto
+## 🧠 Decisiones Técnicas
 
-```text
+### Dos modelos — dos migraciones
+
+`CombatStats` se separa de `Creature` para mantener el modelo limpio:
+
+- `0001_creature`
+- `0002_combat_stats`
+
+---
+
+### Uso de `select_related`
+
+Se evita el problema N+1 usando:
+
+```python
+Creature.objects.select_related('combat_stats')
+```
+
+---
+
+### Transacción atómica
+
+```python
+from django.db import transaction
+
+with transaction.atomic():
+    # guardar creature y stats
+```
+
+---
+
+### Seguridad
+
+- Uso de `.env` con `python-dotenv`
+- `.env` en `.gitignore`
+- `.env.example` como referencia
+
+---
+
+## 📁 Estructura del Proyecto
+
+```bash
 mystale-catalog/
-├── config/          # Configuración Django (settings, urls)
-├── catalog/         # App principal
+├── config/
+├── catalog/
 │   ├── migrations/
 │   ├── templates/
 │   ├── fixtures/
@@ -204,8 +156,13 @@ mystale-catalog/
 
 ---
 
-## Categorías elementales
+## 🌍 Categorías Elementales
 
-fuego · agua · tierra · rayo · sombra · cristal · viento · hielo
-
----
+🔥 Fuego
+💧 Agua
+🌱 Tierra
+⚡ Rayo
+🌑 Sombra
+💎 Cristal
+🌪️ Viento
+❄️ Hielo
