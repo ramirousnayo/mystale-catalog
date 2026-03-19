@@ -46,59 +46,105 @@ Editar `.env` y completar `SECRET_KEY` con cualquier string largo y aleatorio.
 ### 5. Aplicar migraciones
 
 \```bash
-python manage.py migrate
-\```
+# Mystale Catalog
 
-### 6. Cargar datos iniciales (opcional)
+Sistema web para registrar y consultar criaturas energéticas. Proyecto preparado como take-home challenge.
 
-\```bash
-python manage.py loaddata initial_data
-\```
+## Contenido
 
-### 7. Correr el servidor
-
-\```bash
-python manage.py runserver
-\```
-
-Abrir `http://127.0.0.1:8000` en el navegador.
+- Catálogo con filtro por elemento
+- Formulario para registrar criaturas y sus estadísticas de combate
+- Integración con el panel de administración de Django
 
 ---
 
-## Funcionalidades
+## Requisitos
 
-- Catálogo navegable de criaturas con diseño tipo Pokédex
-- Filtro por categoría elemental
-- Formulario de registro con validaciones
+- Python 3.10+
+- pip
+
+---
+
+## Instalación rápida
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/ramirousnayo/mystale-catalog.git
+cd mystale-catalog
+```
+
+2. Crea y activa un entorno virtual:
+
+```bash
+python -m venv venv
+source venv/bin/activate   # macOS / Linux
+# venv\Scripts\activate  # Windows
+```
+
+3. Instala dependencias:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Copia el ejemplo de variables de entorno y edítalo:
+
+```bash
+cp .env.example .env
+```
+
+Rellena `SECRET_KEY` en `.env` con una cadena larga y segura.
+
+5. Aplica migraciones:
+
+```bash
+python manage.py migrate
+```
+
+6. (Opcional) Carga datos iniciales:
+
+```bash
+python manage.py loaddata initial_data
+```
+
+7. Ejecuta el servidor de desarrollo:
+
+```bash
+python manage.py runserver
+```
+
+Abre http://127.0.0.1:8000 en tu navegador.
+
+---
+
+## Funcionalidades principales
+
+- Navegación por catálogo con tarjetas temáticas por elemento
+- Filtro por elemento
+- Registro de criaturas con estadísticas de combate (HP, Ataque, Defensa, Velocidad)
 - Panel de administración en `/admin/`
 
 ---
 
-## Decisiones técnicas
+## Decisiones técnicas (resumen)
 
-### Dos modelos — dos migraciones
-`CombatStats` se separó en su propio modelo en lugar de aplanar las estadísticas en `Creature`. Esto mantiene el modelo principal limpio y permite que el historial de migraciones refleje la evolución natural del esquema: primero la entidad base (`0001_creature`), luego sus estadísticas de combate (`0002_combat_stats`).
-
-### `select_related` en todas las vistas
-Todas las consultas que acceden a `combat_stats` usan `select_related` para evitar el problema N+1 — una sola query SQL en lugar de una por criatura.
-
-### Transacción atómica en el formulario de registro
-La vista `creature_create` guarda `Creature` y `CombatStats` dentro de un `transaction.atomic()`. Si cualquiera de los dos falla, ninguno se persiste. Esto garantiza consistencia en la base de datos.
-
-### Seguridad de claves
-`SECRET_KEY` y `DEBUG` se leen desde un archivo `.env` usando `python-dotenv`. El `.env` está en `.gitignore` y nunca se sube al repositorio. Se incluye `.env.example` como referencia.
+- `CombatStats` es un modelo separado relacionado one-to-one con `Creature` para mantener el modelo principal sencillo y explícito en migraciones.
+- Se usa `select_related('combat_stats')` en vistas para evitar consultas N+1.
+- El registro de criatura y sus estadísticas se guarda dentro de `transaction.atomic()` para garantizar consistencia.
+- `SECRET_KEY` y `DEBUG` se leen de `.env` usando `python-dotenv`. El `.env` no debe subirse al repositorio.
 
 ---
 
 ## Estructura del proyecto
 
-\```
+```text
 mystale-catalog/
 ├── config/          # Configuración Django (settings, urls)
 ├── catalog/         # App principal
-│   ├── migrations/  # 0001_creature, 0002_combat_stats
-│   ├── templates/   # Templates HTML con diseño tipo Pokédex
-│   ├── fixtures/    # Datos iniciales de prueba
+│   ├── migrations/
+│   ├── templates/
+│   ├── fixtures/
 │   ├── models.py
 │   ├── views.py
 │   ├── forms.py
@@ -106,10 +152,12 @@ mystale-catalog/
 ├── .env.example
 ├── requirements.txt
 └── README.md
-\```
+```
 
 ---
 
 ## Categorías elementales
 
-`fuego` `agua` `tierra` `rayo` `sombra` `cristal` `viento` `hielo`
+fuego · agua · tierra · rayo · sombra · cristal · viento · hielo
+
+---
