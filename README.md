@@ -27,7 +27,7 @@ cd mystale-catalog
 
 **Mac / Linux**
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 ```
 
@@ -92,7 +92,6 @@ Abrir: http://127.0.0.1:8000
 - Catálogo navegable de criaturas (tipo Pokédex)  
 - Filtro por categoría elemental  
 - Formulario de registro con validaciones  
-- Panel de administración en `/admin/`  
 
 ---
 
